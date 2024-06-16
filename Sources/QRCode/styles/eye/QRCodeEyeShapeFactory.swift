@@ -173,12 +173,15 @@ public extension QRCodeEyeShapeFactory {
 		dimension: CGFloat,
 		foregroundColor: CGColor,
 		backgroundColor: CGColor? = nil,
+        combinedEyesPupil: Bool = false,
 		isOn: Bool = true
 	) throws -> [(name: String, image: CGImage)] {
 		try QRCodeEyeShapeFactory.shared.all()
 			.map {
+                let eyeGenerator = try QRCodeEyeShapeFactory.shared.named($0.name)
 				let eyeImage = try QRCodeEyeShapeFactory.shared.image(
 					eyeGenerator: $0,
+                    pupilGenerator: combinedEyesPupil ? eyeGenerator.defaultPupil() : nil,
 					dimension: dimension,
 					foregroundColor: foregroundColor,
 					backgroundColor: backgroundColor

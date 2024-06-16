@@ -93,19 +93,90 @@ final class DocumentationImageTests: XCTestCase {
 
 	let imageSize: Double = 120
 
+    func testGenerateAssets() throws {
+        // Eye and shape sample images
+        let combinedEyePupilsShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
+            dimension: imageSize * 2,
+            foregroundColor: .commonBlack,
+            backgroundColor: .clear//CGColor.gray(0.9)
+        )
+        
+        try combinedEyePupilsShapes.forEach { sample in
+            let data = try sample.image.representation.png()
+            try outputFolder.subfolder(with: "combined_eye_pupil").write(data, to: "combined_pupil_eye_\(sample.name).png")
+        }
+        
+        // Eye sample images
+        let eyeShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
+            dimension: imageSize * 2,
+            foregroundColor: .commonBlack,
+            backgroundColor: .clear,
+            combinedEyesPupil: true
+        )
+        
+        try eyeShapes.forEach { sample in
+            let data = try sample.image.representation.png()
+            try outputFolder.subfolder(with: "eye").write(data, to: "eye_\(sample.name).png")
+        }
+        
+        // Pupil sample images
+        let pupilShapes = try QRCodePupilShapeFactory.shared.generateSampleImages(
+            dimension: imageSize * 2,
+            foregroundColor: .commonBlack,
+            backgroundColor: .clear//CGColor.gray(0.9)
+        )
+        
+        try pupilShapes.forEach { sample in
+            let data = try sample.image.representation.png()
+            try outputFolder.subfolder(with: "pupil").write(data, to: "pupil_\(sample.name).png")
+        }
+        
+        // Pixels sample images
+        let commonPixelSettings: [String: Any] = [
+            QRCode.SettingsKey.insetFraction: 0.1,
+            QRCode.SettingsKey.cornerRadiusFraction: 0.75
+        ]
+        let pixelShapes = try QRCodePixelShapeFactory.shared.generateSampleImages(
+            dimension: imageSize * 2,
+            foregroundColor: .commonBlack,
+            backgroundColor: .clear,//CGColor.gray(0.9),
+            commonSettings: commonPixelSettings
+        )
+        
+        try pixelShapes.forEach { sample in
+            let data = try sample.image.representation.png()
+            try outputFolder.subfolder(with: "pixels").write(data, to: "data_\(sample.name).png")
+        }
+    }
+    
 	func testGenerateEyeShapeDocumentationImages() throws {
 		// Eye sample images
 		let eyeShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
 			dimension: imageSize * 2,
 			foregroundColor: .commonBlack,
-			backgroundColor: CGColor.gray(0.9)
+            backgroundColor: .clear//CGColor.gray(0.9)
 		)
 
 		try eyeShapes.forEach { sample in
 			let data = try sample.image.representation.png()
-			try outputFolder.write(data, to: "eye_\(sample.name).png")
+			try outputFolder.write(data, to: "combined_pupil_eye_\(sample.name).png")
 		}
 	}
+    
+    func testGenerateCombinedEyeAndPupulsShapeDocumentationImages() throws {
+        // Eye sample images
+        let eyeShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
+            dimension: imageSize * 2,
+            foregroundColor: .commonBlack,
+            backgroundColor: .clear,
+            combinedEyesPupil: true
+        )
+        
+        try eyeShapes.forEach { sample in
+            let data = try sample.image.representation.png()
+            try outputFolder.write(data, to: "eye_\(sample.name).png")
+        }
+    }
 
 	func testGeneratePixelShapeDocumentationImages() throws {
 		// Pixels sample images
@@ -116,7 +187,7 @@ final class DocumentationImageTests: XCTestCase {
 		let pixelShapes = try QRCodePixelShapeFactory.shared.generateSampleImages(
 			dimension: imageSize * 2,
 			foregroundColor: .commonBlack,
-			backgroundColor: CGColor.gray(0.9),
+            backgroundColor: .clear,//CGColor.gray(0.9),
 			commonSettings: commonPixelSettings
 		)
 
@@ -131,7 +202,7 @@ final class DocumentationImageTests: XCTestCase {
 		let pupilShapes = try QRCodePupilShapeFactory.shared.generateSampleImages(
 			dimension: imageSize * 2,
 			foregroundColor: .commonBlack,
-			backgroundColor: CGColor.gray(0.9)
+            backgroundColor: .clear//CGColor.gray(0.9)
 		)
 
 		try pupilShapes.forEach { sample in
