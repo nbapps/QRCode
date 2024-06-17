@@ -98,7 +98,8 @@ final class DocumentationImageTests: XCTestCase {
         let combinedEyePupilsShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
             dimension: imageSize * 2,
             foregroundColor: .commonBlack,
-            backgroundColor: .clear//CGColor.gray(0.9)
+            backgroundColor: .clear,
+            combinedEyesPupil: true
         )
         
         try combinedEyePupilsShapes.forEach { sample in
@@ -111,7 +112,7 @@ final class DocumentationImageTests: XCTestCase {
             dimension: imageSize * 2,
             foregroundColor: .commonBlack,
             backgroundColor: .clear,
-            combinedEyesPupil: true
+            combinedEyesPupil: false
         )
         
         try eyeShapes.forEach { sample in
@@ -154,17 +155,17 @@ final class DocumentationImageTests: XCTestCase {
 		let eyeShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
 			dimension: imageSize * 2,
 			foregroundColor: .commonBlack,
-            backgroundColor: .clear//CGColor.gray(0.9)
+            backgroundColor: .clear
 		)
 
 		try eyeShapes.forEach { sample in
 			let data = try sample.image.representation.png()
-			try outputFolder.write(data, to: "combined_pupil_eye_\(sample.name).png")
+            try outputFolder.write(data, to: "eye_\(sample.name).png")
 		}
 	}
     
-    func testGenerateCombinedEyeAndPupulsShapeDocumentationImages() throws {
-        // Eye sample images
+    func testGenerateCombinedEyeAndPupilsShapeDocumentationImages() throws {
+        // Eye + pupils sample images
         let eyeShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
             dimension: imageSize * 2,
             foregroundColor: .commonBlack,
@@ -174,7 +175,7 @@ final class DocumentationImageTests: XCTestCase {
         
         try eyeShapes.forEach { sample in
             let data = try sample.image.representation.png()
-            try outputFolder.write(data, to: "eye_\(sample.name).png")
+            try outputFolder.write(data, to: "combined_pupil_eye_\(sample.name).png")
         }
     }
 
