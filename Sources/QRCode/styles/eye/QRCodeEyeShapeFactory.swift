@@ -144,9 +144,8 @@ public extension QRCodeEyeShapeFactory {
 
 		if let g = pupilGenerator as? QRCode.PupilShape.UsePixelShape {
 			path.addPath(g.previewPath(), transform: scaleTransform)
-		}
-		else {
-			let pupil = pupilGenerator ?? eyeGenerator.defaultPupil()
+		} else if let pupilGenerator {
+			let pupil = pupilGenerator
 			path.addPath(pupil.pupilPath(), transform: scaleTransform)
 		}
 
