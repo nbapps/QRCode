@@ -92,6 +92,11 @@ final class DocumentationImageTests: XCTestCase {
 	let imageSize: Double = 120
 
     func testGenerateAssets() throws {
+        // Create demo folder in Downloads
+        let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+        let demoFolder = downloadsURL.appendingPathComponent("QRCode Lib assets")
+        try FileManager.default.createDirectory(at: demoFolder, withIntermediateDirectories: true)
+        
         // Eye and shape sample images
         let combinedEyePupilsShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
             dimension: imageSize * 2,
@@ -100,9 +105,12 @@ final class DocumentationImageTests: XCTestCase {
             combinedEyesPupil: true
         )
         
+        let combinedFolder = demoFolder.appendingPathComponent("combined_eye_pupil")
+        try FileManager.default.createDirectory(at: combinedFolder, withIntermediateDirectories: true)
         try combinedEyePupilsShapes.forEach { sample in
             let data = try sample.image.representation.png()
-            try outputFolder.subfolder(with: "combined_eye_pupil").write(data, to: "combined_pupil_eye_\(sample.name).png")
+            let fileURL = combinedFolder.appendingPathComponent("combined_pupil_eye_\(sample.name).png")
+            try data.write(to: fileURL)
         }
         
         // Eye sample images
@@ -113,9 +121,12 @@ final class DocumentationImageTests: XCTestCase {
             combinedEyesPupil: false
         )
         
+        let eyeFolder = demoFolder.appendingPathComponent("eye")
+        try FileManager.default.createDirectory(at: eyeFolder, withIntermediateDirectories: true)
         try eyeShapes.forEach { sample in
             let data = try sample.image.representation.png()
-            try outputFolder.subfolder(with: "eye").write(data, to: "eye_\(sample.name).png")
+            let fileURL = eyeFolder.appendingPathComponent("eye_\(sample.name).png")
+            try data.write(to: fileURL)
         }
         
         // Pupil sample images
@@ -125,9 +136,12 @@ final class DocumentationImageTests: XCTestCase {
             backgroundColor: CGColor(gray: 1, alpha: 0)//CGColor.gray(0.9)
         )
         
+        let pupilFolder = demoFolder.appendingPathComponent("pupil")
+        try FileManager.default.createDirectory(at: pupilFolder, withIntermediateDirectories: true)
         try pupilShapes.forEach { sample in
             let data = try sample.image.representation.png()
-            try outputFolder.subfolder(with: "pupil").write(data, to: "pupil_\(sample.name).png")
+            let fileURL = pupilFolder.appendingPathComponent("pupil_\(sample.name).png")
+            try data.write(to: fileURL)
         }
         
         // Pixels sample images
@@ -142,10 +156,15 @@ final class DocumentationImageTests: XCTestCase {
             commonSettings: commonPixelSettings
         )
         
+        let pixelsFolder = demoFolder.appendingPathComponent("pixels")
+        try FileManager.default.createDirectory(at: pixelsFolder, withIntermediateDirectories: true)
         try pixelShapes.forEach { sample in
             let data = try sample.image.representation.png()
-            try outputFolder.subfolder(with: "pixels").write(data, to: "data_\(sample.name).png")
+            let fileURL = pixelsFolder.appendingPathComponent("data_\(sample.name).png")
+            try data.write(to: fileURL)
         }
+        
+        print("✅ Assets generated at: \(demoFolder.path)")
     }
     
 	func testGenerateEyeShapeDocumentationImages() throws {
