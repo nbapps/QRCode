@@ -202,7 +202,7 @@ public extension QRCodeEyeShapeFactory {
 		dimension: CGFloat,
 		foregroundColor: CGColor,
 		backgroundColor: CGColor? = nil,
-		eyeBackgroundColor: CGColor? = nil
+		eyeBackgroundColor: CGColor? = nil,
         combinedEyesPupil: Bool = false,
 		isOn: Bool = true
 	) throws -> [(name: String, image: CGImage)] {
