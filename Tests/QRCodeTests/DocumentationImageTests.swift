@@ -96,7 +96,7 @@ final class DocumentationImageTests: XCTestCase {
         let combinedEyePupilsShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
             dimension: imageSize * 2,
             foregroundColor: .commonBlack,
-            backgroundColor: .clear,
+            backgroundColor: CGColor(gray: 1, alpha: 0),
             combinedEyesPupil: true
         )
         
@@ -109,7 +109,7 @@ final class DocumentationImageTests: XCTestCase {
         let eyeShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
             dimension: imageSize * 2,
             foregroundColor: .commonBlack,
-            backgroundColor: .clear,
+            backgroundColor: CGColor(gray: 1, alpha: 0),
             combinedEyesPupil: false
         )
         
@@ -122,7 +122,7 @@ final class DocumentationImageTests: XCTestCase {
         let pupilShapes = try QRCodePupilShapeFactory.shared.generateSampleImages(
             dimension: imageSize * 2,
             foregroundColor: .commonBlack,
-            backgroundColor: .clear//CGColor.gray(0.9)
+            backgroundColor: CGColor(gray: 1, alpha: 0)//CGColor.gray(0.9)
         )
         
         try pupilShapes.forEach { sample in
@@ -138,7 +138,7 @@ final class DocumentationImageTests: XCTestCase {
         let pixelShapes = try QRCodePixelShapeFactory.shared.generateSampleImages(
             dimension: imageSize * 2,
             foregroundColor: .commonBlack,
-            backgroundColor: .clear,//CGColor.gray(0.9),
+            backgroundColor: CGColor(gray: 1, alpha: 0),//CGColor.gray(0.9),
             commonSettings: commonPixelSettings
         )
         
@@ -153,7 +153,7 @@ final class DocumentationImageTests: XCTestCase {
 		let eyeShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
 			dimension: imageSize * 2,
 			foregroundColor: .commonBlack,
-            backgroundColor: .clear
+            backgroundColor: CGColor(gray: 1, alpha: 0)
 		)
 
 		try eyeShapes.forEach { sample in
@@ -167,7 +167,7 @@ final class DocumentationImageTests: XCTestCase {
         let eyeShapes = try QRCodeEyeShapeFactory.shared.generateSampleImages(
             dimension: imageSize * 2,
             foregroundColor: .commonBlack,
-            backgroundColor: .clear,
+            backgroundColor: CGColor(gray: 1, alpha: 0),
             combinedEyesPupil: true
         )
         
@@ -186,7 +186,7 @@ final class DocumentationImageTests: XCTestCase {
 		let pixelShapes = try QRCodePixelShapeFactory.shared.generateSampleImages(
 			dimension: imageSize * 2,
 			foregroundColor: .commonBlack,
-            backgroundColor: .clear,//CGColor.gray(0.9),
+            backgroundColor: CGColor(gray: 1, alpha: 0),//CGColor.gray(0.9),
 			commonSettings: commonPixelSettings
 		)
 
@@ -201,7 +201,7 @@ final class DocumentationImageTests: XCTestCase {
 		let pupilShapes = try QRCodePupilShapeFactory.shared.generateSampleImages(
 			dimension: imageSize * 2,
 			foregroundColor: .commonBlack,
-            backgroundColor: .clear//CGColor.gray(0.9)
+            backgroundColor: CGColor(gray: 1, alpha: 0)//CGColor.gray(0.9)
 		)
 
 		try pupilShapes.forEach { sample in
